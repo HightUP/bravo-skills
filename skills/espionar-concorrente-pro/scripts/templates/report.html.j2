@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inteligência Competitiva — {{ page.display_name|default(page.slug) }}</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0a0a0a;
+  --bg-elev: #111111;
+  --fg: #e8e8e8;
+  --fg-soft: #b8b8b8;
+  --fg-muted: #6b6b6b;
+  --accent: #536878;
+  --accent-light: #7a96a8;
+  --accent-hot: #ff8a3d;
+  --accent-good: #22b462;
+  --border: rgba(255,255,255,0.07);
+  --border-strong: rgba(255,255,255,0.12);
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Geist", "Space Grotesk", sans-serif;
+  --font-mono: "Geist Mono", "Geist", monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+  min-height: 100vh;
+}
+
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(83,104,120,0.18), transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(122,150,168,0.10), transparent 45%);
+  z-index: 0;
+}
+
+.shell {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2.5rem 6rem;
+}
+
+/* ─── HEADER / COVER ─────────────────────────────────────── */
+.cover {
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
+    radial-gradient(circle at 80% 0%, rgba(122,150,168,0.12), transparent 50%);
+  padding: 3.5rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(122,150,168,0.5), transparent);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.brand .mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--accent-light);
+}
+.brand .mark .dot {
+  width: 8px; height: 8px;
+  background: var(--accent-good);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(34,180,98,0.8);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  display: inline-block;
+  padding: 0.5em 1.2em;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(83,104,120,0.06);
+  margin-bottom: 1.8rem;
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  margin-bottom: 1.2rem;
+  background: linear-gradient(180deg, #ffffff 0%, #c8d4dc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cover .lede {
+  font-size: 1.05rem;
+  color: var(--fg-soft);
+  max-width: 60ch;
+  margin-bottom: 2.5rem;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+.meta-card {
+  padding: 1.2rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.02);
+}
+.meta-card .label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-bottom: 0.6rem;
+}
+.meta-card .value {
+  font-family: var(--font-heading);
+  font-size: 1.55rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.meta-card .value.mono {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+/* ─── SECTIONS ───────────────────────────────────────────── */
+section.block { margin-top: 5rem; }
+.block-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.block-head .num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: var(--accent-light);
+  text-transform: uppercase;
+}
+.block-head h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: -0.025em;
+  color: #fff;
+}
+.block-head .sub {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.1em;
+}
+
+/* ─── EXECUTIVE SUMMARY ──────────────────────────────────── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.summary-card {
+  padding: 1.4rem 1.6rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.02);
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.summary-card .ico {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: rgba(122,150,168,0.12);
+  border: 1px solid rgba(122,150,168,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-light);
+}
+.summary-card .body .tag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.summary-card .body .text {
+  font-size: 0.95rem;
+  color: var(--fg);
+  line-height: 1.55;
+}
+.summary-card .body .text strong { color: #fff; font-weight: 600; }
+
+/* ─── TOP ADS ────────────────────────────────────────────── */
+.ads-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+.ad {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.02);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.ad:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+.ad .thumb {
+  aspect-ratio: 4 / 3;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+.ad .thumb.thumb-video {
+  background: #000;
+}
+.ad .thumb-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+.ad .thumb-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+  background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.6) 100%);
+  pointer-events: none;
+}
+.ad .thumb-video .thumb-overlay {
+  background: linear-gradient(180deg, transparent 70%, rgba(0,0,0,0.5) 100%);
+}
+.ad .thumb-overlay .format {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.4em 0.8em;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.6);
+  color: var(--fg);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+}
+
+.thumb.t1 { background: linear-gradient(135deg, #1a2a3a 0%, #536878 100%); }
+.thumb.t2 { background: linear-gradient(135deg, #2a1a3a 0%, #7a4a96 100%); }
+.thumb.t3 { background: linear-gradient(135deg, #3a2a1a 0%, #b07a3a 100%); }
+.thumb.t4 { background: linear-gradient(135deg, #1a3a2a 0%, #3a8a5a 100%); }
+.thumb.t5 { background: linear-gradient(135deg, #3a1a2a 0%, #963a5a 100%); }
+.thumb.t6 { background: linear-gradient(135deg, #1a3a3a 0%, #3a8a96 100%); }
+.thumb.t7 { background: linear-gradient(135deg, #2a2a3a 0%, #5a5a96 100%); }
+.thumb.t8 { background: linear-gradient(135deg, #3a3a1a 0%, #96963a 100%); }
+
+.thumb .shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.55;
+}
+.thumb .shape.s1 { width: 160px; height: 160px; top: -30px; right: -30px; background: rgba(255,255,255,0.4); }
+.thumb .shape.s2 { width: 110px; height: 110px; bottom: -20px; left: -20px; background: rgba(255,255,255,0.25); }
+.thumb .label-mock {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  padding: 0.3em 0.7em;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.ad .body {
+  padding: 1.3rem 1.4rem 1.4rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.ad .ad-id {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-bottom: 0.7rem;
+}
+.ad .hook {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  margin-bottom: 0.7rem;
+}
+.ad .copy {
+  font-size: 0.875rem;
+  color: var(--fg-soft);
+  line-height: 1.55;
+  margin-bottom: 1.2rem;
+  flex: 1;
+}
+.ad .cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  padding: 0.55em 1em;
+  border: 1px solid rgba(122,150,168,0.35);
+  background: rgba(122,150,168,0.08);
+  color: var(--accent-light);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+.ad .cta .arr { font-size: 0.85em; }
+.ad .stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.ad .stat .k {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-bottom: 0.3rem;
+}
+.ad .stat .v {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--fg);
+}
+.ad .stat .v.hot { color: var(--accent-hot); }
+.ad .stat .v.good { color: var(--accent-good); }
+
+/* ─── CREATIVE PATTERNS ──────────────────────────────────── */
+.patterns-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+.pattern-card {
+  padding: 1.6rem 1.6rem 1.4rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.02);
+}
+.pattern-card .head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+.pattern-card .head .title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.pattern-card .head .freq {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent-light);
+  letter-spacing: 0.1em;
+}
+.pattern-card .desc {
+  font-size: 0.875rem;
+  color: var(--fg-soft);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.pattern-card .examples {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.pattern-card .ex {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--fg);
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.025);
+  border-left: 2px solid var(--accent);
+}
+
+/* ─── RECOMMENDATIONS ────────────────────────────────────── */
+.recs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.rec {
+  padding: 1.6rem 1.8rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.6rem;
+  align-items: center;
+  transition: border-color 0.2s ease;
+}
+.rec:hover { border-color: var(--border-strong); }
+.rec .num {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 2.4rem;
+  color: var(--accent-light);
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  min-width: 2ch;
+  line-height: 1;
+}
+.rec .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.rec .text .what {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.rec .text .why {
+  font-size: 0.88rem;
+  color: var(--fg-soft);
+  line-height: 1.55;
+}
+.rec .priority {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 0.5em 0.9em;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.rec .priority.high { background: rgba(255,138,61,0.12); color: var(--accent-hot); border: 1px solid rgba(255,138,61,0.25); }
+.rec .priority.med { background: rgba(122,150,168,0.12); color: var(--accent-light); border: 1px solid rgba(122,150,168,0.25); }
+.rec .priority.low { background: rgba(255,255,255,0.04); color: var(--fg-muted); border: 1px solid var(--border); }
+
+/* ─── FOOTER ─────────────────────────────────────────────── */
+footer.report-foot {
+  margin-top: 6rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.foot-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.foot-brand .logo-box {
+  width: 38px; height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(122,150,168,0.18), rgba(83,104,120,0.05));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent-light);
+  letter-spacing: -0.05em;
+}
+.foot-brand .meta .name {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.foot-brand .meta .tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 0.15rem;
+}
+.foot-info {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: right;
+  line-height: 1.8;
+}
+.foot-info .accent { color: var(--accent-light); }
+
+@media (max-width: 900px) {
+  .shell { padding: 2.5rem 1.2rem 4rem; }
+  .cover { padding: 2.5rem 1.6rem; }
+  .meta-grid { grid-template-columns: repeat(2, 1fr); }
+  .summary-grid, .ads-grid, .patterns-grid { grid-template-columns: 1fr; }
+  .rec { grid-template-columns: auto 1fr; }
+  .rec .priority { grid-column: 2; justify-self: start; }
+  .block-head { flex-wrap: wrap; }
+  .block-head .sub { margin-left: 0; }
+}
+</style>
+</head>
+
+<body>
+<div class="bg-glow"></div>
+
+<main class="shell">
+
+  <!-- COVER -->
+  <section class="cover">
+    <div class="brand">
+      <span class="mark"><span class="dot"></span> intel · espionar concorrente</span>
+      <span>relatório · v1.0</span>
+    </div>
+
+    <span class="eyebrow">inteligência competitiva</span>
+    <h1>{{ page.display_name|default(page.slug) }}</h1>
+    <p class="lede">
+      Varredura completa da Biblioteca de Anúncios do Facebook. {{ page.total_ads }} criativo(s) ativo(s) analisados, padrões de copy decodificados, recomendações táticas geradas. Use isso pra acelerar — não pra copiar.
+    </p>
+
+    <div class="meta-grid">
+      <div class="meta-card">
+        <div class="label">slug</div>
+        <div class="value mono">{{ page.slug }}</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">criativos analisados</div>
+        <div class="value">{{ page.total_ads }}</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">limite</div>
+        <div class="value mono">{{ page.max_ads }}</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">data da varredura</div>
+        <div class="value mono">{{ page.scraped_at_human }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 · EXECUTIVE SUMMARY -->
+  {% if insights %}
+  <section class="block">
+    <div class="block-head">
+      <span class="num">01</span>
+      <h2>Resumo executivo</h2>
+      <span class="sub">{{ insights|length }} insights estratégicos</span>
+    </div>
+    <div class="summary-grid">
+      {% for ins in insights %}
+      <div class="summary-card">
+        <div class="ico">{{ ins.icon|default('•') }}</div>
+        <div class="body">
+          <span class="tag">{{ ins.tag|default('') }}</span>
+          <p class="text">{{ ins.text|safe }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- 02 · TOP ADS -->
+  <section class="block">
+    <div class="block-head">
+      <span class="num">02</span>
+      <h2>Criativos analisados</h2>
+      <span class="sub">{{ ads|length }} anúncio(s)</span>
+    </div>
+    <div class="ads-grid">
+      {% for ad in ads %}
+      <article class="ad">
+        {% if ad['video_relpath'] %}
+        <div class="thumb thumb-video {{ ad['theme'] }}">
+          <video controls preload="metadata"
+                 {% if ad['thumb_data_uri'] %}poster="{{ ad['thumb_data_uri'] }}"{% endif %}>
+            <source src="{{ ad['video_relpath'] }}" type="{{ ad['video_mime'] }}">
+            seu navegador não suporta vídeo.
+          </video>
+          <div class="thumb-overlay"><span class="format">{{ ad['type_label'] }}</span></div>
+        </div>
+        {% else %}
+        <div class="thumb {{ ad['theme'] }}"
+             {% if ad['thumb_data_uri'] %}style="background-image: url('{{ ad['thumb_data_uri'] }}');"{% endif %}>
+          {% if not ad['thumb_data_uri'] %}
+          <span class="shape s1"></span>
+          <span class="shape s2"></span>
+          {% endif %}
+          <span class="label-mock">{{ ad['thumb_label'] }}</span>
+          <div class="thumb-overlay"><span class="format">{{ ad['type_label'] }}</span></div>
+        </div>
+        {% endif %}
+        <div class="body">
+          <span class="ad-id">ad · {{ '%03d' % ad['idx'] }}{% if ad['library_id'] %} · {{ ad['library_id'] }}{% endif %}</span>
+          <h3 class="hook">{{ ad['hook']|default('(sem hook)') }}</h3>
+          <p class="copy">{{ ad['copy']|default('') }}</p>
+          {% if ad['cta_text'] %}
+          <span class="cta">{{ ad['cta_text'] }} <span class="arr">→</span></span>
+          {% endif %}
+          <div class="stats">
+            <div class="stat"><div class="k">rodando</div><div class="v">{{ ad['running_days']|default('—') }}</div></div>
+            <div class="stat"><div class="k">formato</div><div class="v">{{ ad['type']|default('—') }}</div></div>
+            <div class="stat"><div class="k">ativos</div><div class="v">{{ (ad['local_images']|length) + (ad['local_videos']|length) }}</div></div>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- 03 · CREATIVE PATTERNS -->
+  {% if patterns %}
+  <section class="block">
+    <div class="block-head">
+      <span class="num">03</span>
+      <h2>Padrões criativos</h2>
+      <span class="sub">{{ patterns|length }} estruturas recorrentes</span>
+    </div>
+    <div class="patterns-grid">
+      {% for p in patterns %}
+      <div class="pattern-card">
+        <div class="head">
+          <span class="title">{{ p.title|default('—') }}</span>
+          <span class="freq">{{ p.freq|default('') }}</span>
+        </div>
+        <p class="desc">{{ p.desc|default('') }}</p>
+        {% if p.examples %}
+        <div class="examples">
+          {% for ex in p.examples %}
+          <div class="ex">{{ ex }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- 04 · RECOMMENDATIONS -->
+  {% if recommendations %}
+  <section class="block">
+    <div class="block-head">
+      <span class="num">04</span>
+      <h2>Recomendações táticas</h2>
+      <span class="sub">{{ recommendations|length }} testes pra rodar essa semana</span>
+    </div>
+    <div class="recs">
+      {% for r in recommendations %}
+      <div class="rec">
+        <span class="num">{{ '%02d' % loop.index }}</span>
+        <div class="text">
+          <span class="what">{{ r.what|default('—') }}</span>
+          <span class="why">{{ r.why|default('') }}</span>
+        </div>
+        {% set _prio = r.priority|default('med') %}
+        {% set _prio_label = {'high':'alta','med':'média','low':'baixa'}.get(_prio, _prio) %}
+        <span class="priority {{ _prio }}">prioridade {{ _prio_label }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- FOOTER -->
+  <footer class="report-foot">
+    <div class="foot-brand">
+      <div class="logo-box">B</div>
+      <div class="meta">
+        <div class="name">powered by Bravo</div>
+        <div class="tag">skill · espionar concorrente full</div>
+      </div>
+    </div>
+    <div class="foot-info">
+      <div>relatório gerado · <span class="accent">{{ generated_at.strftime('%d %b %Y') }}</span></div>
+      <div>fonte · facebook ad library</div>
+    </div>
+  </footer>
+
+</main>
+
+</body>
+</html>

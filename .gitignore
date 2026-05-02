@@ -1,9 +1,12 @@
 # Drafts não vão pro repo — vão sendo movidos pra skills/ durante o evento
 _drafts/
 
-# Contexto pessoal pra Claude Code (debug ao vivo) — NÃO publicar
+# Contexto pessoal pra Claude Code (debug ao vivo) — NÃO publicar.
+# Exceção: índices CLAUDE.md das skills/ e do obsidian-template/ (esses fazem parte do conteúdo público).
 CLAUDE.md
 **/CLAUDE.md
+!skills/**/CLAUDE.md
+!obsidian-template/**/CLAUDE.md
 
 # macOS
 .DS_Store
@@ -18,8 +21,14 @@ CLAUDE.md
 # Logs / temp
 *.log
 npm-debug.log*
+
+# Secrets e ambientes virtuais
 .env
 .env.local
+.venv/
+venv/
+
+# Dependências e builds
 node_modules/
 __pycache__/
 *.pyc
