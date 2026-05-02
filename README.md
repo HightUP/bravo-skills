@@ -45,8 +45,22 @@ Os arquivos `CLAUDE.md` em cada subpasta são lidos automaticamente pelo Claude 
 
 ## Mentoria Bravo
 
-Quem entra na **[Mentoria Bravo](https://areadebravo.com.br/mentoria)** ganha acesso a:
-- `master` — skill orquestradora que roda a rotina semanal completa
+Pra gestores de tráfego que querem dominar IA, virar fornecedores de tecnologia pros próprios clientes e parar de apagar incêndio. Conheça em **[bravo.growthtap.com.br/mentoria](https://bravo.growthtap.com.br/mentoria)**.
+
+O que está incluso:
+
+1. **Vibe Coding com IA** — codar aplicações do zero com Claude Code (quizzes, dashboards, painéis, integrações) e cobrar dos seus clientes por isso.
+2. **Conteúdo direto ao ponto** — aulas sobre o que gestor de tráfego usa no dia a dia: landing pages, criativos, relatórios, rastreamento.
+3. **Skills compartilhados** — acesse e compartilhe skills prontos entre membros: automações, prompts, scripts e repositórios.
+4. **MCP — Integração com Claude** — a plataforma se conecta ao seu Claude Code. Peça relatórios, busque conteúdo e acesse skills direto pela conversa.
+5. **Canvas de geração de imagens** — node-based pra criar e variar criativos com IA. Suba referências, conecte geradores, gere variações em segundos.
+6. **ZapFlow (SaaS incluso)** — plataforma completa de automação WhatsApp via API oficial. Instale na sua VPS, use com todos os clientes que quiser.
+7. **Calls semanais no Zoom** — sessões ao vivo com o grupo, gravadas e disponíveis na plataforma.
+8. **Grupo no WhatsApp** — todos os membros num grupo só, com participação ativa do mentor.
+9. **Novos SaaS sem custo extra** — a plataforma cresce junto com a mentoria; membros atuais ganham acesso a cada nova ferramenta lançada.
+10. **Agendamento na plataforma (Black)** — membros Black agendam calls 1:1 direto pela plataforma.
+
+E ainda mais skills exclusivas — incluindo a `master`, skill orquestradora que executa a rotina semanal completa de operação.
 
 ## Licença
 
