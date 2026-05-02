@@ -1,0 +1,21 @@
+# Drafts não vão pro repo — vão sendo movidos pra skills/ durante o evento
+_drafts/
+
+# macOS
+.DS_Store
+._*
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs / temp
+*.log
+npm-debug.log*
+.env
+.env.local
+node_modules/
+__pycache__/
+*.pyc
