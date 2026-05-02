@@ -47,8 +47,6 @@ Os arquivos `CLAUDE.md` em cada subpasta são lidos automaticamente pelo Claude 
 
 Quem entra na **[Mentoria Bravo](https://areadebravo.com.br/mentoria)** ganha acesso a:
 - `master` — skill orquestradora que roda a rotina semanal completa
-- `jarvis` — interface WhatsApp via Evolution API (comanda tudo por voz/texto)
-- Todas as skills 🔒 acima
 
 ## Licença
 
