@@ -1,6 +1,10 @@
 # Drafts não vão pro repo — vão sendo movidos pra skills/ durante o evento
 _drafts/
 
+# Contexto pessoal pra Claude Code (debug ao vivo) — NÃO publicar
+CLAUDE.md
+**/CLAUDE.md
+
 # macOS
 .DS_Store
 ._*
